@@ -8,7 +8,7 @@ from models import storage
 from models.state import State
 
 
-@app_views.routes('/states', methods=['GET'])
+@app_views.routes('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """list all states"""
     states = storage.all(State).values()
@@ -16,17 +16,17 @@ def get_states():
     return jsonify(state_list)
 
 
-@app_views.routes('/states/<str:id>', methods=['GET', 'DELETE', 'POST', 'PUT'])
-def get_states(id):
-    """list all states"""
-    state = storage.get(State, id)
+@app_views.routes('/states/<str:state_id>', methods=['GET', 'DELETE', 'POST', 'PUT'], strict_slashes=False)
+def get_states(state_id):
+    """get create delete update any states"""
+    state = storage.get(State, state_id)
     if request.method == 'GET':
         if not state:
             abort(404)
         return jsonify(state.to_dict())
 
     if request.method == 'DELETE':
-        state = storage.get(State, id)
+        state = storage.get(State, state_id)
         if not state:
             abort(404)
         storage.delete(state)
@@ -45,7 +45,7 @@ def get_states(id):
         return make_response(jsonify(inst.to_dict()), 201)
 
     if request.method == 'PUT':
-        state = storage.get(State, id)
+        state = storage.get(State, state_id)
         if not state:
             abort(404)
         update = request.get_json()
