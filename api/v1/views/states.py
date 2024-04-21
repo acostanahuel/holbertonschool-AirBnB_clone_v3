@@ -12,7 +12,7 @@ def get_states():
     return jsonify(state_list)
 
 
-@app_views.routes('/states/<str:id>', methods=['GET','DELETE', 'POST', 'PUT'])
+@app_views.routes('/states/<str:id>', methods=['GET', 'DELETE', 'POST', 'PUT'])
 def get_states(id):
     """list all states"""
     state = storage.get(State, id)
@@ -27,8 +27,8 @@ def get_states(id):
             abort(404)
         storage.delete(state)
         storage.save()
-        return jsonify({"status code": 200,})
-    
+        return jsonify({"status code": 200})
+
     if request.method == 'POST':
         new = request.get_json()
         if not new:
@@ -39,7 +39,7 @@ def get_states(id):
         state = storage.new(inst)
         storage.save()
         return make_response(jsonify(inst.to_dict()), 201)
-    
+
     if request.method == 'PUT':
         state = storage.get(State, id)
         if not state:
@@ -47,7 +47,7 @@ def get_states(id):
         update = request.get_json()
         if not update:
             return make_response(jsonify({"error": "Not a JSON"}), 400)
-        
+
         for key, value in update.items():
             if key != 'id' and key != 'created_at' and key != 'updated_at':
                 setattr(state, key, value)
