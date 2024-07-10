@@ -2,7 +2,7 @@
 """
 Flask Blueprint
 """
-from api.v1views import app_views
+from api.v1.views import app_views
 from flask import jsonify
 from models import storage
 from models.amenity import Amenity
