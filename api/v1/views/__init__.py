@@ -3,6 +3,6 @@ from flask import Blueprint
 
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
-from views.index import *
-from views.states import *
-from views.cities import *
+from api.v1views.index import *
+from api.v1views.states import *
+from api.v1views.cities import *
