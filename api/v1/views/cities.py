@@ -20,19 +20,19 @@ def get_states_cities(state_id):
         return jsonify(cities)
 
     if request.method == 'POST':
+        """Creates a City"""
         state = storage.get(State, state_id)
         if not state:
-            abort(404)        
+            abort(404)
         new = request.get_json()
         if not new:
             abort(400, 'Not a JSON')
-        if "name" not in new.keys():
-            return make_response(jsonify({"error": "Missing name"}), 400)
-        inst = City(**new)
-        inst.state_id = state_id
-        city = storage.new(inst)
-        storage.save()
-        return make_response(jsonify(inst.to_dict()), 201)
+        if 'name' not in city_data:
+            abort(400, 'Missing name')
+        new['state_id'] = state_id
+        city = City(**new)
+        city.save()
+        return jsonify(city.to_dict()), 201
 
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
