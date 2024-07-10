@@ -2,7 +2,7 @@
 """
 Flask states Blueprint
 """
-from api.v1.views import app_views
+from views import app_views
 from flask import jsonify, abort, request, make_response
 from models import storage
 from models.state import State
@@ -43,7 +43,7 @@ def change_cities(city_id):
         city = storage.get(City, city_id)
         if not city:
             abort(404)
-        return jsonify(city.cities.to_dict())
+        return jsonify(city.to_dict())
 
     if request.method == 'DELETE':
         city = storage.get(City, city_id)
