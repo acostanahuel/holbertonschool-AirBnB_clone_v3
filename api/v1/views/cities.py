@@ -9,6 +9,12 @@ from models.state import State
 from models.city import City
 
 
+@app.teardown_appcontext
+def app_close(exception=None):
+    """ Teardown method """
+    storage.close()
+
+
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'], strict_slashes=False)
 def get_states_cities(state_id):
     """get create delete update any states"""
