@@ -22,9 +22,10 @@ def get_states_cities(state_id):
     if request.method == 'POST':
         state = storage.get(State, state_id)
         if not state:
-            abort(404)
-
+            abort(404)        
         new = request.get_json()
+        if not new:
+            return make_response(jsonify({"error": "Not a JSON"}), 400)
         if not new:
             return make_response(jsonify({"error": "Not a JSON"}), 400)
         if "name" not in new.keys():
