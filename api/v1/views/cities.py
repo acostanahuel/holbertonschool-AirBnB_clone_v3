@@ -66,9 +66,3 @@ def change_cities(city_id):
                 setattr(city, key, value)
         storage.save()
         return make_response(jsonify(state.to_dict()), 200)
-
-
-@app.teardown_appcontext
-def app_close(exception=None):
-    """ Teardown method """
-    storage.close()
