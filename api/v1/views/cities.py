@@ -25,9 +25,7 @@ def get_states_cities(state_id):
             abort(404)        
         new = request.get_json()
         if not new:
-            return make_response(jsonify({"error": "Not a JSON"}), 400)
-        if not new:
-            return make_response(jsonify({"error": "Not a JSON"}), 400)
+            abort(400, 'Not a JSON')
         if "name" not in new.keys():
             return make_response(jsonify({"error": "Missing name"}), 400)
         inst = City(**new)
